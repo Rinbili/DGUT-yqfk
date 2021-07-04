@@ -13,7 +13,7 @@ SCKEY      # Server 酱密钥
 
 ### 使用 (Actions) 
 
-在Settings>>Secrect 添加USERNAME,USERPASSWD,SCKEY三个Actions secrets
+在Settings>>Secrect 添加USERNAME,USERPASSWD,SCKEY三个Actions secrets(不想使用Server 酱的话SCKEY填None)
 workflows：
 
 ```shell script
