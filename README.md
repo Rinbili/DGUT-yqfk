@@ -8,14 +8,13 @@ PASSWORD   # 中央认证系统密码
 SCKEY      # Server 酱密钥
 ```
 
-[Server 酱密钥获取](http://sc.ftqq.com/)
-
-//本Repo移除了APScheduler
+[Server 酱密钥获取](http://sct.ftqq.com/)
 
 
-### 使用 (Actions) 【推荐】
+### 使用 (Actions) 
 
-请先在Settings>>Secrect 添加USERNAME,USERPASSWD,SCKEY三个Actions secrets
+在Settings>>Secrect 添加USERNAME,USERPASSWD,SCKEY三个Actions secrets
+workflows：
 
 ```shell script
 name: DGUT_yqfk
