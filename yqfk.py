@@ -6,7 +6,6 @@ import requests
 import time
 import sys
 import json
-import os
 
 username = os.environ["USERNAME"]
 password = os.environ["PASSWORD"]
@@ -78,13 +77,13 @@ def post_form(message, target):
 
 def post_message(text, desp=None):
     if sckey is not None:
-        url = "https://sc.ftqq.com/" + sckey + ".send?text=" + text
+        url = "https://sctapi.ftqq.com/" + sckey + ".send?title=" + text
         if desp is not None:
             url = url + "&desp="
             for d in desp:
                 url = url + str(d) + "%0D%0A%0D%0A"
         rep = requests.get(url=url).json()
-        if rep['errno'] == 0:
+        if rep['code'] == 0:
             console_msg('ServerChan 发送成功', 0)
             exit(0)
         else:
