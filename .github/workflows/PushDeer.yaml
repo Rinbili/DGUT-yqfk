@@ -1,0 +1,32 @@
+name: DGUT_yqfk
+
+on:
+    workflow_dispatch:
+    schedule:
+        - cron: "15 16,17,18  *  *  *"
+    watch:
+        types: [started]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+        
+            - name: "Set up Python"
+              uses: actions/setup-python@v1
+              with:
+                python-version: 3.8
+
+            - name: "requirements"
+              run: pip3 install -r requirements.txt
+
+            - name: "Run yqfk"
+              env:
+                USERNAME: ${{ secrets.USERNAME }}
+                PASSWORD: ${{ secrets.USERPASSWD }}
+                SCKEY: ${{ secrets.PUSHKEY }}
+              run: 
+                python yqfk-PushDeer.py
