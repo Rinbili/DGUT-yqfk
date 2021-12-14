@@ -9,7 +9,7 @@ import os
 
 username = os.environ["USERNAME"]
 password = os.environ["PASSWORD"]
-sckey = os.environ["SCKEY"]
+sckey = os.environ["PUSHKEY"]
 
 
 def get_page(message, target):
