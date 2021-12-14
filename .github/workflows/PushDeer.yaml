@@ -1,4 +1,4 @@
-name: DGUT_yqfk
+name: PushDeer_yqfk
 
 on:
     workflow_dispatch:
@@ -27,6 +27,6 @@ jobs:
               env:
                 USERNAME: ${{ secrets.USERNAME }}
                 PASSWORD: ${{ secrets.USERPASSWD }}
-                SCKEY: ${{ secrets.PUSHKEY }}
+                PUSHKEY: ${{ secrets.PUSHKEY }}
               run: 
                 python yqfk-PushDeer.py
