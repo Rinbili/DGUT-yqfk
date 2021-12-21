@@ -1,4 +1,5 @@
 本Repo为自用版本，不保证脚本能正常运行
+2021.12.21部分代码参考了https://github.com/Bertramoon/dgut-requests
 ## Usage
 
 ```
