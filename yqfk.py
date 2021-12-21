@@ -5,6 +5,7 @@ import re
 import requests
 import time
 import json
+from urllib.parse import urlparse
 import os
 
 username = os.environ["USERNAME"]
