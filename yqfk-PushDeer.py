@@ -87,7 +87,7 @@ def post_message(text, desp=None):
             url = url + "&desp="
             for d in desp:
                 url = url + str(d) + "%0D%0A%0D%0A"
-        # requests.get(url=url).json()
+        requests.get(url=url).json()
         """这里没弄懂 懒得弄了
         print(url)
         rep = requests.get(url=url).json()
