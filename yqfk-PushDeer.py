@@ -52,9 +52,8 @@ def post_form(message, target):
     yqfk_session.get(url=yqfk_acesstoken.url)
     yqfk_info = yqfk_session.get('https://yqfk-daka-api.dgut.edu.cn/record', headers=headers_2).json()
     yqfk_json = yqfk_info['user_data']
-    yqfk_json['important_area'] = None
-    yqfk_json['current_region'] = None
-    yqfk_json['acid_test_results'] = None
+    yqfk_json['current_region'] = ["142", "440000", "441900", "441901113"]
+    #默认为东莞
     yqfk_json['confirm'] = 1
 
     console_msg(yqfk_info['message'])
