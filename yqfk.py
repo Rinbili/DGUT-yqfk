@@ -7,6 +7,7 @@ import time
 import json
 from urllib.parse import urlparse
 import os
+requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += 'HIGH:!DH:!aNULL'
 
 username = os.environ["USERNAME"]
 password = os.environ["PASSWORD"]
@@ -15,7 +16,7 @@ sckey = os.environ["SCKEY"]
 def get_page(message, target):
     url = "https://cas.dgut.edu.cn/home/Oauth/getToken/appid/yqfkdaka/state/home.html"
     session = requests.Session()
-    origin = session.get(url=url)
+    origin = session.get(url=url, verify=False)
     html = origin.content.decode('utf-8')
     pattern = re.compile(r"var token = \"(.*?)\";", re.MULTILINE | re.DOTALL)
     token_tmp = pattern.search(html).group(1)
@@ -23,7 +24,7 @@ def get_page(message, target):
     data = {'username': username, 'password': password, '__token__': token_tmp, 'wechat_verif': ''}
     headers = {'X-Requested-With': 'XMLHttpRequest'}
     response = session.post(url=url, headers=headers, cookies=cookies, data=data).json()
-    
+
     response_json = json.loads(response)
 
     if response_json['message'] != '验证通过':
@@ -45,15 +46,13 @@ def post_form(message, target):
     for item in yqfk_get.query.split("&"):
         data[item.split("=")[0]] = item.split("=", maxsplit=2)[-1]
     res = yqfk_session.post("https://yqfk-daka-api.dgut.edu.cn/auth", json=data)
-    yqfk_acesstoken = yqfk_session.get(url=target[0])
+    yqfk_acesstoken = yqfk_session.get(url=target[0], verify=False)
     access_token = res.json().get('access_token')
     headers_2 = {'authorization': 'Bearer ' + access_token}
-    yqfk_session.get(url=yqfk_acesstoken.url)
-    yqfk_info = yqfk_session.get('https://yqfk-daka-api.dgut.edu.cn/record', headers=headers_2).json()
+    yqfk_session.get(url=yqfk_acesstoken.url, verify=False)
+    yqfk_info = yqfk_session.get('https://yqfk-daka-api.dgut.edu.cn/record', headers=headers_2, verify=False).json()
     yqfk_json = yqfk_info['user_data']
-    yqfk_json['important_area'] = None
     yqfk_json['current_region'] = ["142", "440000", "441900", "441901113"]
-    yqfk_json['acid_test_results'] = None
     yqfk_json['confirm'] = 1
 
     console_msg(yqfk_info['message'])
@@ -72,7 +71,7 @@ def post_form(message, target):
             console_msg('二次提交，确认成功', 0)
             message.append('二次提交，确认成功')
             result = yqfk_session.post(url="https://yqfk-daka-api.dgut.edu.cn/record", headers=headers_2,
-                               json={"data": yqfk_json}).json()
+                                       json={"data": yqfk_json}).json()
             console_msg(result['message'])
             return 0
         console_msg("二次提交，确认失败", 1)
