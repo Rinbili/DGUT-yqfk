@@ -22,7 +22,11 @@ jobs:
 
             - name: "requirements"
               run: pip3 install -r requirements.txt
-
+              
+            - name: "time"
+              run:
+               timedatectl set-timezone Asia/Shanghai
+              
             - name: "Run yqfk"
               env:
                 USERNAME: ${{ secrets.USERNAME }}
