@@ -29,5 +29,5 @@ jobs:
                 PASSWORD: ${{ secrets.USERPASSWD }}
                 PUSHKEY: ${{ secrets.PUSHKEY }}
               run: 
-                sudo ntpdate cn.pool.ntp.org
+                ntpdate cn.pool.ntp.org
                 python yqfk-PushDeer.py
