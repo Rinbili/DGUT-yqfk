@@ -17,7 +17,7 @@ sckey = os.environ["PUSHKEY"]
 def get_page(message, target):
     url = "https://cas.dgut.edu.cn/home/Oauth/getToken/appid/yqfkdaka/state/home.html"
     session = requests.Session()
-    origin = session.get(url=url, verify=False)
+    origin = session.get(url=url)
     html = origin.content.decode('utf-8')
     pattern = re.compile(r"var token = \"(.*?)\";", re.MULTILINE | re.DOTALL)
     token_tmp = pattern.search(html).group(1)
@@ -47,18 +47,17 @@ def post_form(message, target):
     for item in yqfk_get.query.split("&"):
         data[item.split("=")[0]] = item.split("=", maxsplit=2)[-1]
     res = yqfk_session.post("https://yqfk-daka-api.dgut.edu.cn/auth", json=data)
-    yqfk_acesstoken = yqfk_session.get(url=target[0], verify=False)
+    yqfk_acesstoken = yqfk_session.get(url=target[0])
     access_token = res.json().get('access_token')
-    headers_2 = {'authorization': 'Bearer ' + access_token}
-    yqfk_session.get(url=yqfk_acesstoken.url, verify=False)
-    yqfk_info = yqfk_session.get('https://yqfk-daka-api.dgut.edu.cn/record', headers=headers_2, verify=False).json()
+    headers = {'authorization': 'Bearer ' + access_token}
+    yqfk_session.get(url=yqfk_acesstoken.url)
+    yqfk_info = yqfk_session.get('https://yqfk-daka-api.dgut.edu.cn/record', headers=headers).json()
     yqfk_json = yqfk_info['user_data']
-    yqfk_json['current_region'] = ["142", "440000", "441900", "441901113"]
     yqfk_json['confirm'] = 1
 
     console_msg(yqfk_info['message'])
     message.append(yqfk_info['message'])
-    result = yqfk_session.post(url="https://yqfk-daka-api.dgut.edu.cn/record", headers=headers_2,
+    result = yqfk_session.post(url="https://yqfk-daka-api.dgut.edu.cn/record", headers=headers,
                                json={"data": yqfk_json}).json()
     if 'message' not in result.keys():
         console_msg('提交失败')
@@ -71,7 +70,7 @@ def post_form(message, target):
         if '已经提交' in result['message'] or '成功' in result['message']:
             console_msg('二次提交，确认成功', 0)
             message.append('二次提交，确认成功')
-            result = yqfk_session.post(url="https://yqfk-daka-api.dgut.edu.cn/record", headers=headers_2,
+            result = yqfk_session.post(url="https://yqfk-daka-api.dgut.edu.cn/record", headers=headers,
                                        json={"data": yqfk_json}).json()
             console_msg(result['message'])
             return 0
@@ -86,7 +85,7 @@ def post_message(text, desp=None):
             url = url + "&desp="
             for d in desp:
                 url = url + str(d) + "%0D%0A%0D%0A"
-        rep = requests.get(url=url, verify=False).reason
+        rep = requests.get(url=url).reason
         # 判断发送是否成功
         if rep == 'OK':
             console_msg('ServerChan 发送成功', 0)
