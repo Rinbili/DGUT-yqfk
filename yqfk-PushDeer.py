@@ -7,6 +7,7 @@ import time
 import json
 from urllib.parse import urlparse
 import os
+requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += 'HIGH:!DH:!aNULL'
 
 username = os.environ["USERNAME"]
 password = os.environ["PASSWORD"]
