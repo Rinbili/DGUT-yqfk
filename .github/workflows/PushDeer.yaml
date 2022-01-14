@@ -33,5 +33,4 @@ jobs:
                 PASSWORD: ${{ secrets.USERPASSWD }}
                 PUSHKEY: ${{ secrets.PUSHKEY }}
               run: 
-                timedatectl set-timezone Asia/Shanghai
                 python yqfk-PushDeer.py
