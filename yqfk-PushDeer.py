@@ -24,7 +24,7 @@ def get_page(message, target):
     data = {'username': username, 'password': password, '__token__': token_tmp, 'wechat_verif': ''}
     headers = {'X-Requested-With': 'XMLHttpRequest'}
     response = session.post(url=url, headers=headers, cookies=cookies, data=data).json()
-    
+
     response_json = json.loads(response)
 
     if response_json['message'] != '验证通过':
@@ -53,7 +53,6 @@ def post_form(message, target):
     yqfk_info = yqfk_session.get('https://yqfk-daka-api.dgut.edu.cn/record', headers=headers_2).json()
     yqfk_json = yqfk_info['user_data']
     yqfk_json['current_region'] = ["142", "440000", "441900", "441901113"]
-    #默认为东莞
     yqfk_json['confirm'] = 1
 
     console_msg(yqfk_info['message'])
@@ -72,7 +71,7 @@ def post_form(message, target):
             console_msg('二次提交，确认成功', 0)
             message.append('二次提交，确认成功')
             result = yqfk_session.post(url="https://yqfk-daka-api.dgut.edu.cn/record", headers=headers_2,
-                               json={"data": yqfk_json}).json()
+                                       json={"data": yqfk_json}).json()
             console_msg(result['message'])
             return 0
         console_msg("二次提交，确认失败", 1)
@@ -86,17 +85,14 @@ def post_message(text, desp=None):
             url = url + "&desp="
             for d in desp:
                 url = url + str(d) + "%0D%0A%0D%0A"
-        requests.get(url=url).json()
-        """这里没弄懂 懒得弄了
-        print(url)
-        rep = requests.get(url=url).json()
-        if rep['result'] == 0:
+        rep = requests.get(url=url).reason
+        # 判断发送是否成功
+        if rep == 'OK':
             console_msg('ServerChan 发送成功', 0)
             exit(0)
         else:
             console_msg('ServerChan 发送失败', 1)
             exit(0)
-        """
 
 
 def run():
