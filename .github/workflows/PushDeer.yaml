@@ -25,7 +25,7 @@ jobs:
               
             - name: "time"
               run:
-               timedatectl set-timezone Asia/Shanghai
+               sudo timedatectl set-timezone Asia/Shanghai
               
             - name: "Run yqfk"
               env:
