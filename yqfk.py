@@ -54,6 +54,8 @@ def post_form(message, target):
     yqfk_json = yqfk_info['user_data']
     yqfk_json['current_region'] = ["142", "440000", "441900", "441901113"]
     yqfk_json['confirm'] = 1
+    yqfk_json['health_situation'] = 1
+    yqfk_json['body_temperature'] = 37
 
     console_msg(yqfk_info['message'])
     message.append(yqfk_info['message'])
